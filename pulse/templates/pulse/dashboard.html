@@ -1,0 +1,51 @@
+{% load static %}
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page_title }} | First Django</title>
+  <link rel="stylesheet" href="{% static 'pulse/dashboard.css' %}">
+</head>
+<body>
+  <main class="board-shell">
+    <header class="board-header">
+      <div>
+        <p class="kicker">FIRST DJANGO / INFORMATION BOARD</p>
+        <h1>시장 정보 게시판</h1>
+        <p class="intro">코인 시세와 세계정세 브리핑을 한 화면에서 확인합니다.</p>
+      </div>
+      <button class="refresh-button" id="refresh-button" type="button">새로고침</button>
+    </header>
+
+    <section class="status-row" aria-live="polite">
+      <span class="status-pill" id="data-status">데이터 확인 중</span>
+      <span id="updated-at">마지막 갱신 준비 중</span>
+    </section>
+
+    <section class="section-block" aria-labelledby="market-title">
+      <div class="section-title-row"><div><p class="kicker">MARKET SNAPSHOT</p><h2 id="market-title">주요 시장 지표</h2></div><span class="section-note">서버 프록시 데이터</span></div>
+      <div class="metric-grid" id="metric-grid"><div class="loading-card">시장 데이터를 불러오는 중입니다.</div></div>
+    </section>
+
+    <section class="section-block" aria-labelledby="briefing-title">
+      <div class="section-title-row"><div><p class="kicker">WORLD AFFAIRS</p><h2 id="briefing-title">세계정세 브리핑</h2></div><span class="section-note">편집 요약</span></div>
+      <div class="briefing-list">
+        {% for briefing in briefings %}
+        <article class="briefing-item">
+          <div class="briefing-meta"><span>{{ briefing.category }}</span><small>{{ briefing.source }}</small></div>
+          <h3>{{ briefing.title }}</h3>
+          <p>{{ briefing.summary }}</p>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="section-block notes-block" aria-labelledby="notes-title">
+      <div class="section-title-row"><div><p class="kicker">READING NOTES</p><h2 id="notes-title">정보를 읽는 기준</h2></div></div>
+      <div class="notes-grid"><div><b>01</b><p>가격 변화는 24시간 기준으로 표시합니다.</p></div><div><b>02</b><p>공포·탐욕 지수는 시장 심리 참고용입니다.</p></div><div><b>03</b><p>정보는 투자 권유가 아니며 판단은 사용자에게 있습니다.</p></div></div>
+    </section>
+  </main>
+  <script src="{% static 'pulse/dashboard.js' %}" defer></script>
+</body>
+</html>
